@@ -2,6 +2,8 @@
 
 A new Flutter application.
 
+[leaning from flutter china club](https://book.flutterchina.club/) 
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
