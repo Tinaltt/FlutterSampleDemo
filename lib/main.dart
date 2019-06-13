@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_demo_app/counter.dart';
 import 'package:flutter_demo_app/statemanager.dart';
+import 'package:flutter_demo_app/widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -159,6 +160,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) {
                   return new ParentWidgetC();
+                }));
+              },
+            ),
+            FlatButton(
+              child: Text("Widget"),
+              color: Colors.lightBlueAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                  return new WidgetDemo();
                 }));
               },
             ),
