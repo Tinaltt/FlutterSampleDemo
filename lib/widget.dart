@@ -1,5 +1,3 @@
-//------------------------- Text ----------------------------------
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -32,12 +30,43 @@ class WidgetDemo extends StatelessWidget {
               }));
             },
           ),
+          FlatButton(
+            child: Text("Image"),
+            color: Colors.lightBlueAccent,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.push(context, new MaterialPageRoute(builder: (context) {
+                return new ImageWidget();
+              }));
+            },
+          ),
+          FlatButton(
+            child: Text("Icon"),
+            color: Colors.lightBlueAccent,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.push(context, new MaterialPageRoute(builder: (context) {
+                return new IconWidget();
+              }));
+            },
+          ),
+          FlatButton(
+            child: Text("CheckBox & Switch"),
+            color: Colors.lightBlueAccent,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.push(context, new MaterialPageRoute(builder: (context) {
+                return new SwitchAndCheckBoxWidget();
+              }));
+            },
+          ),
         ],
       ),
     );
   }
 }
 
+//------------------------- Text ----------------------------------
 class TextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -110,6 +139,7 @@ class TextWidget extends StatelessWidget {
   }
 }
 
+//------------------------- Button ----------------------------------
 class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -166,3 +196,178 @@ class ButtonWidget extends StatelessWidget {
   }
 }
 
+//------------------------- Image ----------------------------------
+class ImageWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Image Widget"),
+      ),
+      body: new Wrap(
+        spacing: 10.0,
+        runSpacing: 10.0,
+        children: <Widget>[
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+          ),
+          Image.asset(
+            "assets/images/avatar-webp.webp",
+            width: 100.0,
+          ),
+          Image(
+            image: NetworkImage(
+                "https://avatars2.githubusercontent.com/u/20411648?s=460&v=4"),
+            width: 100.0,
+          ),
+          Image.network(
+            "https://avatars2.githubusercontent.com/u/20411648?s=460&v=4",
+            width: 100.0,
+          ),
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+            color: Colors.blue,
+            colorBlendMode: BlendMode.difference,
+          ),
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+            fit: BoxFit
+                .contain, //这是图片的默认适应规则，图片会在保证图片本身长宽比不变的情况下缩放以适应当前显示空间，图片不会变形。
+          ),
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+            fit: BoxFit.cover, //会按图片的长宽比放大后居中填满显示空间，图片不会变形，超出显示空间部分会被剪裁。
+          ),
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+            fit: BoxFit.fill, //会拉伸填充满显示空间，图片本身长宽比会发生变化，图片会变形。
+          ),
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+            fit: BoxFit
+                .fitHeight, //图片的高度会缩放到显示空间的高度，宽度会按比例缩放，然后居中显示，图片不会变形，超出显示空间部分会被剪裁。
+          ),
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+            fit: BoxFit
+                .fitWidth, //图片的宽度会缩放到显示空间的宽度，高度会按比例缩放，然后居中显示，图片不会变形，超出显示空间部分会被剪裁。
+          ),
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+            fit: BoxFit.none, //图片没有适应策略，会在显示空间内显示图片，如果图片比显示空间大，则显示空间只会显示图片中间部分。
+          ),
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+            fit: BoxFit.scaleDown,
+          ),
+          Image(
+            image: AssetImage("assets/images/avatar.jpg"),
+            width: 100.0,
+            height: 200.0,
+            repeat: ImageRepeat.repeatY,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+//------------------------- Icon ----------------------------------
+class IconWidget extends StatelessWidget {
+  String icons = "\uE914" + " \uE000" + " \uE90D";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Icon Widget"),
+      ),
+      body: new Wrap(
+        spacing: 10.0,
+        runSpacing: 10.0,
+        children: <Widget>[
+          Text(
+            icons,
+            style: TextStyle(
+              fontFamily: "MaterialIcons",
+              fontSize: 32.0,
+              color: Colors.blue,
+            ),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.accessible,
+                color: Colors.green,
+                size: 32.0,
+              ),
+              Icon(
+                Icons.error,
+                color: Colors.green,
+                size: 32.0,
+              ),
+              Icon(
+                Icons.fingerprint,
+                color: Colors.green,
+                size: 32.0,
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+//------------------------- Checkbox ----------------------------------
+class SwitchAndCheckBoxWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new _SwitchAndCheckBoxState();
+  }
+}
+
+class _SwitchAndCheckBoxState extends State<SwitchAndCheckBoxWidget> {
+  bool _switchSelected = true; //维护单选开关状态
+  bool _checkboxSelected = true; //维护复选框状态
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Switch & Checkbox"),
+      ),
+      body: new Column(
+        children: <Widget>[
+          Switch(
+            value: _switchSelected,
+            onChanged: (value) {
+              setState(() {
+                _switchSelected = value;
+              });
+            },
+          ),
+          Checkbox(
+            value: _checkboxSelected,
+            activeColor: Colors.lightBlueAccent,
+            onChanged: (value) {
+              setState(() {
+                _checkboxSelected = value;
+              });
+            },
+          )
+        ],
+      ),
+    );
+  }
+}
