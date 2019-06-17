@@ -1,11 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:english_words/english_words.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_demo_app/counter.dart';
 import 'package:flutter_demo_app/statemanager.dart';
 import 'package:flutter_demo_app/widget.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+  if (Platform.isAndroid) {
+    //设置Android头部的导航栏透明
+    SystemUiOverlayStyle systemUiOverlayStyle =
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  }
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -74,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.

@@ -60,6 +60,16 @@ class WidgetDemo extends StatelessWidget {
               }));
             },
           ),
+          FlatButton(
+            child: Text("TextField"),
+            color: Colors.lightBlueAccent,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.push(context, new MaterialPageRoute(builder: (context) {
+                return new TextFieldWidget();
+              }));
+            },
+          ),
         ],
       ),
     );
@@ -366,6 +376,143 @@ class _SwitchAndCheckBoxState extends State<SwitchAndCheckBoxWidget> {
               });
             },
           )
+        ],
+      ),
+    );
+  }
+}
+
+//------------------------- TextField ----------------------------------
+class TextFieldWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new TextFieldWidgetState();
+  }
+}
+
+class TextFieldWidgetState extends State<TextFieldWidget> {
+  TextEditingController _textEditingController = new TextEditingController();
+
+  FocusNode focusNode1 = new FocusNode();
+  FocusNode focusNode2 = new FocusNode();
+  FocusScopeNode focusScopeNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController.text = "I'm default text!";
+    _textEditingController.selection = TextSelection(
+        baseOffset: 2, extentOffset: _textEditingController.text.length);
+
+    _textEditingController.addListener(() {
+      print(_textEditingController.text);
+    });
+    focusNode1.addListener(() {
+      print("focusNode1 focus:${focusNode1.hasFocus}");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("TextField Widget"),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(
+              labelText: "用户名：",
+              hintText: "用户名或邮箱",
+              prefixIcon: Icon(Icons.person),
+            ),
+            controller: _textEditingController,
+            autofocus: true,
+            focusNode: focusNode1, //关联focusNode1
+          ),
+          TextField(
+            decoration: InputDecoration(
+              labelText: "密码：",
+              hintText: "您的登录密码",
+              prefixIcon: Icon(Icons.lock),
+            ),
+            obscureText: true,
+            onChanged: (v) {
+              print("onChange:$v");
+            },
+            focusNode: focusNode2, //关联focusNode2
+          ),
+          Builder(
+            builder: (ctx) {
+              return Column(
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("移动焦点"),
+                    onPressed: () {
+                      //将焦点从第一个TextField移到第二个TextField
+                      // 这是一种写法 FocusScope.of(context).requestFocus(focusNode2);
+                      // 这是第二种写法
+                      if (null == focusScopeNode) {
+                        focusScopeNode = FocusScope.of(context);
+                      }
+                      focusScopeNode.requestFocus(focusNode2);
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text("隐藏键盘"),
+                    onPressed: () {
+                      // 当所有编辑框都失去焦点时键盘就会收起
+                      focusNode1.unfocus();
+                      focusNode2.unfocus();
+                    },
+                  )
+                ],
+              );
+            },
+          ),
+          Theme(
+            data: Theme.of(context).copyWith(
+                hintColor: Colors.grey[200],
+                inputDecorationTheme: InputDecorationTheme(
+                  labelStyle: TextStyle(color: Colors.lightBlueAccent),
+                  hintStyle: TextStyle(color: Colors.grey[400], fontSize: 12.0),
+                )),
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.email),
+                    labelText: "Email",
+                    hintText: "电子邮件地址",
+                  ),
+                ),
+                TextField(
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.phone),
+                    labelText: "Phone",
+                    hintText: "手机号码",
+                  ),
+                ),
+                Container(
+                  child: TextField(
+                      keyboardType: TextInputType.datetime,
+                      decoration: InputDecoration(
+                          labelText: "生日",
+                          hintText: "出生日期",
+                          prefixIcon: Icon(Icons.calendar_today),
+                          border: InputBorder.none //隐藏下划线
+                      )
+                  ),
+                  decoration: BoxDecoration(
+                    // 下滑线浅灰色，宽度1像素
+                      border: Border(bottom: BorderSide(color: Colors.grey[200], width: 1.0))
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
