@@ -70,6 +70,16 @@ class WidgetDemo extends StatelessWidget {
               }));
             },
           ),
+          FlatButton(
+            child: Text("Form"),
+            color: Colors.lightBlueAccent,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.push(context, new MaterialPageRoute(builder: (context) {
+                return new ForumWidget();
+              }));
+            },
+          ),
         ],
       ),
     );
@@ -503,17 +513,95 @@ class TextFieldWidgetState extends State<TextFieldWidget> {
                           hintText: "出生日期",
                           prefixIcon: Icon(Icons.calendar_today),
                           border: InputBorder.none //隐藏下划线
-                      )
-                  ),
+                          )),
                   decoration: BoxDecoration(
-                    // 下滑线浅灰色，宽度1像素
-                      border: Border(bottom: BorderSide(color: Colors.grey[200], width: 1.0))
-                  ),
+                      // 下滑线浅灰色，宽度1像素
+                      border: Border(
+                          bottom:
+                              BorderSide(color: Colors.grey[200], width: 1.0))),
                 )
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+//------------------------- Form ----------------------------------
+class ForumWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new ForumWidgetState();
+  }
+}
+
+class ForumWidgetState extends State<ForumWidget> {
+  TextEditingController _userNameController = new TextEditingController();
+  TextEditingController _pwdController = new TextEditingController();
+  GlobalKey _formKey = new GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Forum Widget"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+        child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  autofocus: true,
+                  controller: _userNameController,
+                  decoration: InputDecoration(
+                    labelText: "用户名",
+                    hintText: "用户名或邮箱",
+                    icon: Icon(Icons.person),
+                  ),
+                  validator: (v) {
+                    return v.trim().length > 0 ? null : "用户名不能为空";
+                  },
+                ),
+                TextFormField(
+                  controller: _pwdController,
+                  decoration: InputDecoration(
+                    labelText: "密码",
+                    hintText: "您的登录密码",
+                    icon: Icon(Icons.lock),
+                  ),
+                  obscureText: true,
+                  validator: (v) {
+                    return v.trim().length > 5 ? null : "密码不能少于6位";
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 28.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: RaisedButton(
+                            padding: EdgeInsets.all(15.0),
+                            child: Text("登录"),
+                            color: Theme.of(context).primaryColor,
+                            textColor: Colors.white,
+                            onPressed: () {
+                              if ((_formKey.currentState as FormState)
+                                  .validate()) {
+                                print("验证通过，提交数据");
+                                print("用户名：${_userNameController.text}");
+                                print("密码：${_pwdController.text}");
+                              }
+                            }),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )),
       ),
     );
   }
