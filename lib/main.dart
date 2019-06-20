@@ -8,6 +8,8 @@ import 'package:flutter_demo_app/counter.dart';
 import 'package:flutter_demo_app/statemanager.dart';
 import 'package:flutter_demo_app/widget.dart';
 
+import 'layout.dart';
+
 void main() {
   runApp(MyApp());
   if (Platform.isAndroid) {
@@ -184,6 +186,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     new MaterialPageRoute(builder: (context) {
                   return new WidgetDemo();
                 }));
+              },
+            ),
+            FlatButton(
+              child: Text("Layout"),
+              color: Colors.redAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                      return new LayoutDemo();
+                    }));
               },
             ),
           ],

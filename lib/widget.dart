@@ -579,24 +579,52 @@ class ForumWidgetState extends State<ForumWidget> {
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 28.0),
-                  child: Row(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Column(
                     children: <Widget>[
-                      Expanded(
-                        child: RaisedButton(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text("登录"),
-                            color: Theme.of(context).primaryColor,
-                            textColor: Colors.white,
-                            onPressed: () {
-                              if ((_formKey.currentState as FormState)
-                                  .validate()) {
-                                print("验证通过，提交数据");
-                                print("用户名：${_userNameController.text}");
-                                print("密码：${_pwdController.text}");
-                              }
-                            }),
-                      ),
+                      RaisedButton(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text("登录"),
+                          color: Theme.of(context).primaryColor,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            // 通过_formKey.currentState 获取FormState后，
+                            // 调用validate()方法校验用户名密码是否合法，校验
+                            // 通过后再提交数据。
+                            if ((_formKey.currentState as FormState)
+                                .validate()) {
+                              print("111验证通过，提交数据");
+                              print("用户名：${_userNameController.text}");
+                              print("密码：${_pwdController.text}");
+                            } else {
+                              print("验证不通过");
+                            }
+                          }),
+                      Builder(
+                        //Builder会将widget节点的context作为回调参数
+                        builder: (context) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child: RaisedButton(
+                              padding: EdgeInsets.all(15.0),
+                              child: Text("登录11"),
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                //由于本widget也是Form的子代widget，所以可以通过下面方式获取FormState
+                                if (Form.of(context).validate()) {
+                                  //验证通过提交数据
+                                  print("222验证通过，提交数据");
+                                  print("用户名：${_userNameController.text}");
+                                  print("密码：${_pwdController.text}");
+                                } else {
+                                  print("验证不通过");
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      )
                     ],
                   ),
                 )
