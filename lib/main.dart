@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_demo_app/counter.dart';
+import 'package:flutter_demo_app/scaffold.dart';
+import 'package:flutter_demo_app/scrollable.dart';
 import 'package:flutter_demo_app/statemanager.dart';
+import 'package:flutter_demo_app/vessel.dart';
 import 'package:flutter_demo_app/widget.dart';
 
 import 'layout.dart';
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -40,7 +44,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         "new_page": (context) => NewRoute(),
-      }, //注册路由表
+      },
+      //注册路由表
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -96,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
+        child: ListView(
           // Column is also layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
           // children horizontally, and tries to be as tall as its parent.
@@ -111,16 +116,21 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            Center(
+              child: Text(
+                'You have pushed the button this many times:',
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            Center(
+              child: Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.display1,
+              ),
             ),
-            RandomWordsWidget(),
+            Center(
+              child: RandomWordsWidget(),
+            ),
             FlatButton(
               child: Text("打开路由"),
               color: Colors.redAccent,
@@ -195,8 +205,41 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) {
-                      return new LayoutDemo();
-                    }));
+                  return new LayoutDemo();
+                }));
+              },
+            ),
+            FlatButton(
+              child: Text("Vessel"),
+              color: Colors.lightBlueAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                  return new VesselDemo();
+                }));
+              },
+            ),
+            FlatButton(
+              child: Text("Scaffold"),
+              color: Colors.redAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                  return new ScaffoldDemo();
+                }));
+              },
+            ),
+            FlatButton(
+              child: Text("Scrollable"),
+              color: Colors.lightBlueAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                  return new ScrollableDemo();
+                }));
               },
             ),
           ],
