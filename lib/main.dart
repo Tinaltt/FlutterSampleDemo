@@ -11,6 +11,7 @@ import 'package:flutter_demo_app/statemanager.dart';
 import 'package:flutter_demo_app/vessel.dart';
 import 'package:flutter_demo_app/widget.dart';
 
+import 'channel.dart';
 import 'layout.dart';
 
 void main() {
@@ -240,6 +241,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     new MaterialPageRoute(builder: (context) {
                   return new ScrollableDemo();
                 }));
+              },
+            ),
+            FlatButton(
+              child: Text("PlatfromChannel"),
+              color: Colors.redAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                      return new ChannelDemo();
+                    }));
               },
             ),
           ],

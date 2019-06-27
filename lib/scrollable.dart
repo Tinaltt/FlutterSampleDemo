@@ -27,6 +27,14 @@ class ScrollableDemo extends StatelessWidget {
                   return new ListViewRouter();
                 }));
               }),
+          RaisedButton(
+              child: Text("CustomScorllView"),
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                  return new CustomScrollViewDemo();
+                }));
+              }),
         ],
       ),
     );
@@ -144,5 +152,66 @@ class _ListViewRouterState extends State<ListViewRouter> {
           generateWordPairs().take(20).map((e) => e.asPascalCase).toList());
       setState(() {});
     });
+  }
+}
+
+class CustomScrollViewDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Material(
+      child: CustomScrollView(
+//        physics: BouncingScrollPhysics(),
+        slivers: <Widget>[
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 250.0,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Container(
+                color: Colors.pinkAccent,
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  "CustomScrollView",
+                ),
+              ),
+              background: Image.asset(
+                "assets/images/avatar-webp.webp",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.all(8.0),
+            sliver: new SliverGrid(
+                delegate: new SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return new Container(
+                      alignment: Alignment.center,
+                      color: Colors.pinkAccent[100 * (index % 5)],
+                      child: Text("grid item ${index + 1}"),
+                    );
+                  },
+                  childCount: 20,
+                ),
+                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 10.0,
+                  childAspectRatio: 4.0,
+                )),
+          ),
+          new SliverFixedExtentList(
+              delegate: new SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                return new Container(
+                  alignment: Alignment.center,
+                  color: Colors.redAccent[100 * (index % 5)],
+                  child: Text("list item ${index + 1}"),
+                );
+              }, childCount: 50),
+              itemExtent: 50.0)
+        ],
+      ),
+    );
   }
 }

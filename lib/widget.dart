@@ -303,7 +303,7 @@ class ImageWidget extends StatelessWidget {
 
 //------------------------- Icon ----------------------------------
 class IconWidget extends StatelessWidget {
-  String icons = "\uE914" + " \uE000" + " \uE90D";
+  final String icons = "\uE914" + " \uE000" + " \uE90D";
 
   @override
   Widget build(BuildContext context) {
