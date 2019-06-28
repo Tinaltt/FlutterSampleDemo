@@ -35,6 +35,22 @@ class ScrollableDemo extends StatelessWidget {
                   return new CustomScrollViewDemo();
                 }));
               }),
+          RaisedButton(
+              child: Text("ScrollControl"),
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                  return new ScrollControlTestRouter();
+                }));
+              }),
+          RaisedButton(
+              child: Text("ScrollNotification"),
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                  return new ScrollNotificationTestRoute();
+                }));
+              }),
         ],
       ),
     );
@@ -211,6 +227,121 @@ class CustomScrollViewDemo extends StatelessWidget {
               }, childCount: 50),
               itemExtent: 50.0)
         ],
+      ),
+    );
+  }
+}
+
+class ScrollControlTestRouter extends StatefulWidget {
+  @override
+  _ScrollControlTestRouterState createState() =>
+      _ScrollControlTestRouterState();
+}
+
+class _ScrollControlTestRouterState extends State<ScrollControlTestRouter> {
+  ScrollController _controller = new ScrollController();
+  bool showToTopBtn = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //监听滚动事件，打印滚动位置
+    _controller.addListener(() {
+      print("当前滚动位置：${_controller.offset}"); //打印滚动位置
+      if (_controller.offset < 1000 && showToTopBtn) {
+        showToTopBtn = false;
+      } else if (_controller.offset >= 1000 && !showToTopBtn) {
+        showToTopBtn = true;
+      }
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    //为了避免内存泄露，需要调用_controller.dispose
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("ScrollController"),
+      ),
+      body: Scrollbar(
+        child: ListView.builder(
+            itemCount: 100,
+            itemExtent: 50.0, //列表项高度固定时，显式指定高度是一个好习惯(性能消耗小)
+            controller: _controller,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text("item ${index + 1}"),
+              );
+            }),
+      ),
+      floatingActionButton: !showToTopBtn
+          ? null
+          : FloatingActionButton(
+              child: Icon(Icons.arrow_upward),
+              onPressed: () {
+                //返回到顶部时执行动画
+                _controller.animateTo(.0,
+                    duration: Duration(milliseconds: 200), curve: Curves.ease);
+              },
+            ),
+    );
+  }
+}
+
+class ScrollNotificationTestRoute extends StatefulWidget {
+  @override
+  _ScrollNotificationTestRouteState createState() =>
+      _ScrollNotificationTestRouteState();
+}
+
+class _ScrollNotificationTestRouteState
+    extends State<ScrollNotificationTestRoute> {
+  String _progress = "0%";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Scroll Notification"),
+      ),
+      body: Scrollbar(
+        child: NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification notification) {
+            double progress = notification.metrics.pixels /
+                notification.metrics.maxScrollExtent;
+            setState(() {
+              _progress = "${(progress * 100).toInt()}%";
+            });
+            print("BottomEdge: ${notification.metrics.extentAfter == 0}");
+            return true;
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              ListView.builder(
+                  itemExtent: 50.0,
+                  itemCount: 100,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text("${index + 1}"),
+                    );
+                  }),
+              CircleAvatar(
+                radius: 30.0,
+                backgroundColor: Colors.black54,
+                child: Text(_progress),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
