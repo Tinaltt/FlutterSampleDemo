@@ -44,11 +44,15 @@ class _ChannelDemoState extends State<ChannelDemo> {
     });
   }
 
-  void _onEvent(Object event) {
+  void _onData(Object event) {
     setState(() {
       _chargingStatus =
           "Battery status: ${event == 'charging' ? '' : 'dis'}charging.";
     });
+  }
+
+  void _onDone() {
+    print("onDone");
   }
 
   _setPlatformHandler() {
@@ -60,7 +64,8 @@ class _ChannelDemoState extends State<ChannelDemo> {
   void initState() {
     super.initState();
     _setPlatformHandler();
-    eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
+    eventChannel.receiveBroadcastStream().listen(_onData,
+        onDone: _onDone, onError: _onError, cancelOnError: true);
   }
 
   @override

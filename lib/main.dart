@@ -8,11 +8,14 @@ import 'package:flutter_demo_app/counter.dart';
 import 'package:flutter_demo_app/scaffold.dart';
 import 'package:flutter_demo_app/scrollable.dart';
 import 'package:flutter_demo_app/statemanager.dart';
+import 'package:flutter_demo_app/theme.dart';
 import 'package:flutter_demo_app/vessel.dart';
 import 'package:flutter_demo_app/widget.dart';
 
 import 'channel.dart';
+import 'gesture.dart';
 import 'layout.dart';
+import 'notification.dart';
 
 void main() {
   runApp(MyApp());
@@ -251,6 +254,39 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) {
                       return new ChannelDemo();
+                    }));
+              },
+            ),
+            FlatButton(
+              child: Text("Theme"),
+              color: Colors.lightBlueAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                      return new ThemeDemo();
+                    }));
+              },
+            ),
+            FlatButton(
+              child: Text("Gesture Demo"),
+              color: Colors.redAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                      return new GestureDemo();
+                    }));
+              },
+            ),
+            FlatButton(
+              child: Text("Notification Demo"),
+              color: Colors.lightBlueAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                      return new NotificationDemo();
                     }));
               },
             ),
