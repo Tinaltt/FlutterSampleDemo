@@ -1,6 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+class StateManagerDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("StateManager"),),
+      body: Column(
+        children: <Widget>[
+          FlatButton(
+            child: Text("TapboxA"),
+            color: Colors.redAccent,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) {
+                    return new TapboxA();
+                  }));
+            },
+          ),
+          FlatButton(
+            child: Text("TapboxB"),
+            color: Colors.lightBlueAccent,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) {
+                    return new ParentWidget();
+                  }));
+            },
+          ),
+          FlatButton(
+            child: Text("TapboxC"),
+            color: Colors.redAccent,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) {
+                    return new ParentWidgetC();
+                  }));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
 // TapboxA 管理自身状态.
 
 //------------------------- TapboxA ----------------------------------

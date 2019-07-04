@@ -12,7 +12,9 @@ import 'package:flutter_demo_app/theme.dart';
 import 'package:flutter_demo_app/vessel.dart';
 import 'package:flutter_demo_app/widget.dart';
 
+import 'animation.dart';
 import 'channel.dart';
+import 'customwidget.dart';
 import 'gesture.dart';
 import 'layout.dart';
 import 'notification.dart';
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.pink,
+        primaryColorDark: Colors.pinkAccent,
       ),
       routes: {
         "new_page": (context) => NewRoute(),
@@ -159,35 +162,13 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             FlatButton(
-              child: Text("TapboxA"),
+              child: Text("StateManagerDemo"),
               color: Colors.redAccent,
               textColor: Colors.white,
               onPressed: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) {
-                  return new TapboxA();
-                }));
-              },
-            ),
-            FlatButton(
-              child: Text("TapboxB"),
-              color: Colors.lightBlueAccent,
-              textColor: Colors.white,
-              onPressed: () {
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) {
-                  return new ParentWidget();
-                }));
-              },
-            ),
-            FlatButton(
-              child: Text("TapboxC"),
-              color: Colors.redAccent,
-              textColor: Colors.white,
-              onPressed: () {
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) {
-                  return new ParentWidgetC();
+                  return new StateManagerDemo();
                 }));
               },
             ),
@@ -253,8 +234,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) {
-                      return new ChannelDemo();
-                    }));
+                  return new ChannelDemo();
+                }));
               },
             ),
             FlatButton(
@@ -264,8 +245,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) {
-                      return new ThemeDemo();
-                    }));
+                  return new ThemeDemo();
+                }));
               },
             ),
             FlatButton(
@@ -275,8 +256,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) {
-                      return new GestureDemo();
-                    }));
+                  return new GestureDemo();
+                }));
               },
             ),
             FlatButton(
@@ -286,7 +267,29 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) {
-                      return new NotificationDemo();
+                  return new NotificationDemo();
+                }));
+              },
+            ),
+            FlatButton(
+              child: Text("Animation Demo"),
+              color: Colors.redAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                  return new AnimationDemo();
+                }));
+              },
+            ),
+            FlatButton(
+              child: Text("Custom Widget Demo"),
+              color: Colors.lightBlueAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) {
+                      return new CustomWidgetDemo();
                     }));
               },
             ),
